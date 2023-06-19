@@ -1,7 +1,6 @@
 import React from "react";
-import { google } from "googleapis";
+// import { customsearch_v1 } from "@googleapis/customsearch";
 
-const compute = google.compute('v1');
 const API_KEY = "AIzaSyDPNJMIi_sg1u8exgAVFWLv2hs5fUa3QIM";
 
 const CX = "50627cd5f9ec24744";
@@ -11,6 +10,9 @@ interface IWeatherResult {
   currentWeather: any;
 }
 
+/* const customSearch = new customsearch_v1.Customsearch({
+  auth: API_KEY,
+}); */
 
 
 /* 
@@ -260,9 +262,8 @@ const weatherConditionCodes = [
 const getImagesResults = async () => {
   const query = "Bali";
   console.log("before")
-  /* const response = await customsearch.cse.list({
-    auth: API_KEY,
-   // cx: CX,
+ /*  const response = await customSearch.cse.list({
+    cx: CX,
     q: query,
     searchType: "image",
   });

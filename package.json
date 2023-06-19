@@ -3,25 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.5.2",
+    "@googleapis/customsearch": "^1.0.0",
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/react-places-autocomplete": "^7.2.9",
     "axios": "^1.4.0",
-    "googleapis": "^118.0.0",
+    "bfj": "^7.0.2",
+    "browserslist": "^4.21.9",
+    "camelcase": "^7.0.1",
+    "css-loader": "^6.8.1",
+    "dotenv": "^16.3.1",
+    "dotenv-expand": "^10.0.0",
+    "esbuild": "0.18.4",
+    "eslint": "^8.43.0",
+    "eslint-config-react-app": "^7.0.1",
+    "file-loader": "^6.2.0",
+    "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
+    "prompts": "^2.4.2",
     "react": "^18.2.0",
+    "react-app-polyfill": "^3.0.0",
+    "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "react-places-autocomplete": "^7.3.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^3.3.2"
+    "react-refresh": "^0.14.0",
+    "resolve": "^1.22.2",
+    "resolve-url-loader": "^5.0.0",
+    "sass-loader": "^13.3.2",
+    "semver": "^7.5.2",
+    "source-map-loader": "^4.0.1",
+    "style-loader": "^3.3.3",
+    "typescript": "^5.1.3"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -35,20 +50,17 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "node build.js",
+    "start": "esbuild src/index.tsx --outfile=output.js --bundle --loader:.ts=ts --serve=localhost:8000 --servedir=."
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "husky": {
     "hooks": {
-     "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "browserslist": {
@@ -62,5 +74,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "ts-loader": "^9.4.3"
   }
 }
