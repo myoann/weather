@@ -276,6 +276,7 @@ const WeatherResult = ({ cityName, currentWeather }: IWeatherResult) => {
 
   getImagesResults();
   console.log(currentWeather);
+  
   return (
     <div>
       <h2>{cityName}</h2>
