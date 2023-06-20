@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState2(initialState) {
+          function useState3(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect2(create, deps) {
+          function useEffect3(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,7 +1879,7 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect2;
+          exports.useEffect = useEffect3;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState2;
+          exports.useState = useState3;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -24923,10 +24923,10 @@
   var import_react4 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
-  // src/App.tsx
+  // src/components/App/index.tsx
   var import_react3 = __toESM(require_react());
 
-  // src/Weather.tsx
+  // src/components/Weather/index.tsx
   var import_react2 = __toESM(require_react());
   var import_react_places_autocomplete = __toESM(require_dist());
 
@@ -27036,21 +27036,38 @@
     mergeConfig: mergeConfig2
   } = axios_default;
 
-  // src/WeatherResult.tsx
+  // src/components/WeatherResult/index.tsx
   var import_react = __toESM(require_react());
-  var getImagesResults = async () => {
-    const query = "Bali";
-    console.log("before");
-  };
+
+  // src/assets/clouds-1.gif
+  var clouds_1_default = "./clouds-1-CGDABIZS.gif";
+
+  // src/components/WeatherResult/index.tsx
+  var API_KEY = "AIzaSyDPNJMIi_sg1u8exgAVFWLv2hs5fUa3QIM";
+  var CX = "50627cd5f9ec24744";
+  var customSearchUrl = (query) => `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image&imgType=photo`;
   var WeatherResult = ({ cityName, currentWeather }) => {
-    getImagesResults();
-    console.log(currentWeather);
-    return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h2", null, cityName), /* @__PURE__ */ import_react.default.createElement("p", null, currentWeather.weather[0].description), /* @__PURE__ */ import_react.default.createElement("p", null, "Temperature: ", currentWeather.temp, "\xB0C"), /* @__PURE__ */ import_react.default.createElement("p", null, "Feels like: ", currentWeather.feels_like, "\xB0C"), /* @__PURE__ */ import_react.default.createElement("p", null, "Humidity: ", currentWeather.humidity, "%"));
+    const [image, setImage] = (0, import_react.useState)(null);
+    (0, import_react.useEffect)(() => {
+      const getImage = async () => {
+        const query = `"${currentWeather.weather[0].main}" in the city of ${cityName}`;
+        const url = customSearchUrl(query);
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        setImage(data.items[0].link);
+      };
+      getImage();
+    }, [cityName]);
+    if (!image) {
+      return null;
+    }
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "weatherResult", style: { background: `url(${image})`, backgroundSize: "cover" } }, /* @__PURE__ */ import_react.default.createElement("h2", null, cityName), /* @__PURE__ */ import_react.default.createElement("p", null, currentWeather.weather[0].description), /* @__PURE__ */ import_react.default.createElement("p", null, "Temperature: ", currentWeather.temp, "\xB0C"), /* @__PURE__ */ import_react.default.createElement("p", null, "Feels like: ", currentWeather.feels_like, "\xB0C"), /* @__PURE__ */ import_react.default.createElement("p", null, "Humidity: ", currentWeather.humidity, "%"), /* @__PURE__ */ import_react.default.createElement("img", { src: clouds_1_default, alt: "clouds" }), clouds_1_default);
   };
   var WeatherResult_default = WeatherResult;
 
-  // src/Weather.tsx
-  var API_KEY = "d16e5782314dce82f8f8203626ada68d";
+  // src/components/Weather/index.tsx
+  var API_KEY2 = "d16e5782314dce82f8f8203626ada68d";
   var Weather = () => {
     const [city, setSelectedCity] = (0, import_react2.useState)(null);
     const [address, setAddress] = (0, import_react2.useState)("");
@@ -27072,7 +27089,7 @@
     (0, import_react2.useEffect)(() => {
       const fetchWeather = async () => {
         const { data, ...rest } = await axios_default.get(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
+          `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY2}&units=metric`
         );
         console.log(data);
         console.log(rest);
@@ -27093,7 +27110,7 @@
         "input",
         {
           ...getInputProps({
-            placeholder: "Search Places ...",
+            placeholder: "Search for a city",
             className: "location-search-input"
           })
         }
@@ -27116,7 +27133,7 @@
   };
   var Weather_default = Weather;
 
-  // src/App.tsx
+  // src/components/App/index.tsx
   var App = () => {
     return /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement(Weather_default, null));
   };

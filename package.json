@@ -11,14 +11,9 @@
     "react-dom": "^18.2.0",
     "react-places-autocomplete": "^7.3.0"
   },
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 4,
-    "semi": false,
-    "singleQuote": true
-  },
   "scripts": {
-    "start": "esbuild src/index.tsx --outfile=output.js --bundle --loader:.ts=ts --serve=localhost:8000 --servedir=."
+    "start": "node build.mjs",
+    "oldstart": "esbuild src/index.tsx --outfile=output.js --bundle --loader:.ts=ts --serve=localhost:8000 --servedir=."
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
