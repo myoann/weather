@@ -3,7 +3,7 @@ import * as esbuild from 'esbuild'
 let ctx = await esbuild.context({
   entryPoints: ['src/index.tsx'],
   bundle: true,
-  outfile: 'output.js',
+  outfile: './public/output.js',
   loader: {
     '.ts': 'ts',
     '.png': 'file',
@@ -11,20 +11,10 @@ let ctx = await esbuild.context({
   },
 })
 
-await ctx.watch()
+await ctx.watch();
 
-let { host, port } = await ctx.serve({
-  servedir: '.',
+await ctx.serve({
+  servedir: './public',
   host: 'localhost',
   port: 8000,
-})
-
-/*
-import * as esbuild from 'esbuild'
-
-await esbuild.build({
-  entryPoints: ['app.jsx'],
-  bundle: true,
-  outfile: 'out.js',
-})
-*/
+});
