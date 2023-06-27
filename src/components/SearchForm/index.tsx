@@ -1,46 +1,67 @@
-import React, { useState } from "react";
-import PlacesAutocomplete from "react-places-autocomplete";
+import React, { type ReactNode, useState } from 'react'
+import PlacesAutocomplete from 'react-places-autocomplete'
 
-import "./index.css";
+import './index.css'
 
 interface ISearchFormProps {
-  onSelect: (address: string) => void;
+    selectedCity: string | null
+    onSelect: (address: string) => void
 }
 
-const SearchForm = ({ onSelect }: ISearchFormProps) => {
-  const [address, setAddress] = useState("");
+const SearchForm = ({
+    selectedCity,
+    onSelect,
+}: ISearchFormProps): ReactNode => {
+    const [address, setAddress] = useState(selectedCity ?? '')
 
-  return (
-    <PlacesAutocomplete
-      value={address}
-      onChange={(address) => setAddress(address)}
-      onSelect={onSelect}
-    >
-      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div>
-          <input
-            {...getInputProps({
-              placeholder: "Search for a city",
-              className: "location-search-input",
-            })}
-          />
-          
-          <div className="autocomplete-dropdown-container">
-            {loading && <div>Loading...</div>}
-            {suggestions.map((suggestion) => (
-              <div
-                {...getSuggestionItemProps(suggestion)} 
-                className={suggestion.active ? "suggestion-item--active" : "suggestion-item"}
-                key={suggestion.placeId}
-              >
-                <span>{suggestion.description}</span>
-              </div>
-            ))}
-          </div>
+    return (
+        <div
+            className={
+                selectedCity !== null ? 'search-form-result' : 'search-form'
+            }
+        >
+            <PlacesAutocomplete
+                value={address}
+                onChange={(address) => {
+                    setAddress(address)
+                }}
+                onSelect={onSelect}
+            >
+                {({
+                    getInputProps,
+                    suggestions,
+                    getSuggestionItemProps,
+                    loading,
+                }) => (
+                    <div>
+                        <input
+                            {...getInputProps({
+                                placeholder: 'Search for a city',
+                                className: 'location-search-input',
+                            })}
+                        />
+
+                        <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion) => (
+                                <div
+                                    {...getSuggestionItemProps(suggestion)}
+                                    className={
+                                        suggestion.active
+                                            ? 'suggestion-item--active'
+                                            : 'suggestion-item'
+                                    }
+                                    key={suggestion.placeId}
+                                >
+                                    <span>{suggestion.description}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </PlacesAutocomplete>
         </div>
-      )}
-    </PlacesAutocomplete>
-  );
-};
+    )
+}
 
-export default SearchForm;
+export default SearchForm

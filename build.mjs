@@ -1,20 +1,22 @@
 import * as esbuild from 'esbuild'
+import eslint from 'esbuild-plugin-eslint'
 
-let ctx = await esbuild.context({
+const ctx = await esbuild.context({
   entryPoints: ['src/index.tsx'],
   bundle: true,
   outfile: './public/output.js',
   loader: {
     '.ts': 'ts',
     '.png': 'file',
-    '.gif': 'file',
+    '.gif': 'file'
   },
+  plugins: [eslint({ /* config */ })]
 })
 
-await ctx.watch();
+await ctx.watch()
 
 await ctx.serve({
   servedir: './public',
   host: 'localhost',
-  port: 8000,
-});
+  port: 8000
+})

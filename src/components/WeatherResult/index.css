@@ -7,6 +7,23 @@
 }
 
 .weatherResult h2, .weatherResult p {
-  mix-blend-mode: lighten;
-  background-color: rgba(255, 255, 255, 1);
+  color: white;
+}
+
+.temperature {
+  color: white;
+  font-weight: bold;
+  font-size: 7em;
+}
+
+.weatherBg {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10%;
+      /* padding-left: 20%; */
+      /* padding-right: 20%; */
+      height: 100%;
+      width: 100%;
 }

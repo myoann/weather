@@ -26810,7 +26810,7 @@
   var Axios_default = Axios;
 
   // node_modules/axios/lib/cancel/CancelToken.js
-  var CancelToken = class _CancelToken {
+  var CancelToken = class {
     constructor(executor) {
       if (typeof executor !== "function") {
         throw new TypeError("executor must be a function.");
@@ -26888,7 +26888,7 @@
      */
     static source() {
       let cancel;
-      const token = new _CancelToken(function executor(c) {
+      const token = new CancelToken(function executor(c) {
         cancel = c;
       });
       return {
@@ -27036,38 +27036,87 @@
   // src/components/SearchForm/index.tsx
   var import_react = __toESM(require_react());
   var import_react_places_autocomplete = __toESM(require_dist());
-  var SearchForm = ({ onSelect }) => {
-    const [address, setAddress] = (0, import_react.useState)("");
+  var SearchForm = ({
+    selectedCity,
+    onSelect
+  }) => {
+    const [address, setAddress] = (0, import_react.useState)(selectedCity ?? "");
     return /* @__PURE__ */ import_react.default.createElement(
-      import_react_places_autocomplete.default,
+      "div",
       {
-        value: address,
-        onChange: (address2) => setAddress(address2),
-        onSelect
+        className: selectedCity !== null ? "search-form-result" : "search-form"
       },
-      ({ getInputProps, suggestions, getSuggestionItemProps, loading }) => /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement(
-        "input",
+      /* @__PURE__ */ import_react.default.createElement(
+        import_react_places_autocomplete.default,
         {
-          ...getInputProps({
-            placeholder: "Search for a city",
-            className: "location-search-input"
-          })
-        }
-      ), /* @__PURE__ */ import_react.default.createElement("div", { className: "autocomplete-dropdown-container" }, loading && /* @__PURE__ */ import_react.default.createElement("div", null, "Loading..."), suggestions.map((suggestion) => /* @__PURE__ */ import_react.default.createElement(
-        "div",
-        {
-          ...getSuggestionItemProps(suggestion),
-          className: suggestion.active ? "suggestion-item--active" : "suggestion-item",
-          key: suggestion.placeId
+          value: address,
+          onChange: (address2) => {
+            setAddress(address2);
+          },
+          onSelect
         },
-        /* @__PURE__ */ import_react.default.createElement("span", null, suggestion.description)
-      ))))
+        ({
+          getInputProps,
+          suggestions,
+          getSuggestionItemProps,
+          loading
+        }) => /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement(
+          "input",
+          {
+            ...getInputProps({
+              placeholder: "Search for a city",
+              className: "location-search-input"
+            })
+          }
+        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "autocomplete-dropdown-container" }, loading && /* @__PURE__ */ import_react.default.createElement("div", null, "Loading..."), suggestions.map((suggestion) => /* @__PURE__ */ import_react.default.createElement(
+          "div",
+          {
+            ...getSuggestionItemProps(suggestion),
+            className: suggestion.active ? "suggestion-item--active" : "suggestion-item",
+            key: suggestion.placeId
+          },
+          /* @__PURE__ */ import_react.default.createElement("span", null, suggestion.description)
+        ))))
+      )
     );
   };
   var SearchForm_default = SearchForm;
 
   // src/components/WeatherResult/index.tsx
   var import_react2 = __toESM(require_react());
+
+  // src/uvRatings.ts
+  var lowExposure = {
+    risk: "Low",
+    color: "green",
+    description: "Low exposure. No sun protection needed."
+  };
+  var moderateExposure = {
+    risk: "Moderate",
+    color: "yellow",
+    description: "Moderate exposure. Think about sun protection, especially between 11am-3pm."
+  };
+  var highExposure = {
+    risk: "High",
+    color: "orange",
+    description: "High exposure. Skin protection needed for most skin tones."
+  };
+  var veryHighExposure = {
+    risk: "Very High",
+    color: "red",
+    description: "Very high exposure. Skin protection needed for all skin tones."
+  };
+  var uvRatings = {
+    1: lowExposure,
+    2: lowExposure,
+    3: moderateExposure,
+    4: moderateExposure,
+    5: moderateExposure,
+    6: highExposure,
+    7: highExposure,
+    8: veryHighExposure,
+    9: veryHighExposure
+  };
 
   // src/weatherConditionCodes.ts
   var weatherConditionCodes = [
@@ -27461,28 +27510,55 @@
   var API_KEY = "AIzaSyDPNJMIi_sg1u8exgAVFWLv2hs5fUa3QIM";
   var CX = "50627cd5f9ec24744";
   var customSearchUrl = (query) => `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image&imgType=photo`;
-  var WeatherResult = ({ cityName, currentWeather }) => {
+  var WeatherResult = ({
+    selectedCity,
+    currentWeather
+  }) => {
     const [image, setImage] = (0, import_react2.useState)(null);
     (0, import_react2.useEffect)(() => {
       const getImage = async () => {
-        const query = `"${currentWeather.weather[0].main}" in the city of ${cityName}`;
+        const query = `"${currentWeather.weather[0].main}" in the city of ${selectedCity}`;
         const url = customSearchUrl(query);
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
         setImage(data.items[0].link);
       };
-      getImage();
-    }, [cityName]);
-    if (!image) {
+      void getImage();
+    }, [selectedCity]);
+    if (image === null) {
       return null;
     }
-    const weatherCondition = weatherConditionCodes.find((item) => item.id === currentWeather.weather[0].id);
-    let secondImage;
-    if (weatherCondition?.image) {
-      secondImage = weatherCondition.image;
+    const weatherCondition = weatherConditionCodes.find(
+      (item) => item.id === currentWeather.weather[0].id
+    );
+    const secondImage = weatherCondition?.image;
+    const sunrise = new Date(currentWeather.sunrise * 1e3).toLocaleTimeString();
+    const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 3);
+    const sunset = new Date(currentWeather.sunset * 1e3).toLocaleTimeString();
+    const sunsetWithoutSeconds = sunset.slice(0, sunset.length - 3);
+    const temperature = Math.trunc(currentWeather.temp);
+    const feelsLike = Math.trunc(currentWeather.feels_like);
+    const uvIndex = currentWeather.uvi;
+    const uvIndexInt = Math.trunc(uvIndex);
+    let uvRatingRisk;
+    let uvRatingDescription;
+    if (uvIndexInt >= 1 && uvIndexInt <= 9) {
+      uvRatingRisk = uvRatings[uvIndexInt].risk;
+      uvRatingDescription = uvRatings[uvIndexInt].description;
     }
-    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherResult", style: { background: `url(${image})`, backgroundSize: "cover" } }, /* @__PURE__ */ import_react2.default.createElement("h2", null, cityName), /* @__PURE__ */ import_react2.default.createElement("p", null, currentWeather.weather[0].description), /* @__PURE__ */ import_react2.default.createElement("p", null, "Temperature: ", currentWeather.temp, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Feels like: ", currentWeather.feels_like, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Humidity: ", currentWeather.humidity, "%"), secondImage && /* @__PURE__ */ import_react2.default.createElement("picture", null, /* @__PURE__ */ import_react2.default.createElement("img", { src: secondImage, alt: "Flowers" })));
+    const thirdImage = "https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/weather/rain/raindrops-misted-on-a-windscreen.jpg";
+    return /* @__PURE__ */ import_react2.default.createElement(
+      "div",
+      {
+        className: "weatherResult",
+        style: {
+          background: `url(${thirdImage})`,
+          backgroundSize: "cover"
+        }
+      },
+      /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherBg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "temperature" }, temperature, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Feels like: ", feelsLike, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("h2", null, selectedCity), /* @__PURE__ */ import_react2.default.createElement("p", null, currentWeather.weather[0].description), /* @__PURE__ */ import_react2.default.createElement("p", null, "Humidity: ", currentWeather.humidity, "%"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "UV INDEX"), /* @__PURE__ */ import_react2.default.createElement("p", null, "UVI: ", uvIndex), uvRatingRisk, uvRatingDescription, /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "SUNRISE & SUNSET"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunrise at: ", sunriseWithoutSeconds), /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunset at: ", sunsetWithoutSeconds), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "WIND"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind speed: ", currentWeather.wind_speed, " km/h"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind direction: ", currentWeather.wind_deg, "\xB0"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "Feels Like"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Feels like: ", feelsLike, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("img", { src: secondImage, alt: "Flowers" }), secondImage !== null && /* @__PURE__ */ import_react2.default.createElement("picture", null, /* @__PURE__ */ import_react2.default.createElement("img", { src: secondImage, alt: "Flowers" })))
+    );
   };
   var WeatherResult_default = WeatherResult;
 
@@ -27493,7 +27569,7 @@
     const [weather, setWeather] = (0, import_react3.useState)(null);
     const handleSelect = async (address) => {
       const geocode = await (0, import_react_places_autocomplete2.geocodeByAddress)(address);
-      if (geocode) {
+      if (geocode.length > 0) {
         const { lat, lng } = await (0, import_react_places_autocomplete2.getLatLng)(geocode[0]);
         setSelectedCity({
           name: address,
@@ -27504,25 +27580,35 @@
     };
     (0, import_react3.useEffect)(() => {
       const fetchWeather = async () => {
-        const { data, ...rest } = await axios_default.get(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY2}&units=metric`
-        );
-        console.log(data);
-        console.log(rest);
-        setWeather(data);
+        if (city != null) {
+          const { data, ...rest } = await axios_default.get(
+            `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY2}&units=metric`
+          );
+          console.log(data);
+          console.log(rest);
+          setWeather(data);
+        }
       };
-      if (city) {
-        fetchWeather();
-      }
+      void fetchWeather();
     }, [city]);
-    return /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement(SearchForm_default, { onSelect: handleSelect }), city && weather && /* @__PURE__ */ import_react3.default.createElement(WeatherResult_default, { cityName: city.name, currentWeather: weather.current }));
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "weather" }, /* @__PURE__ */ import_react3.default.createElement(
+      SearchForm_default,
+      {
+        onSelect: handleSelect,
+        selectedCity: city?.name ?? null
+      }
+    ), city != null && weather != null && /* @__PURE__ */ import_react3.default.createElement(
+      WeatherResult_default,
+      {
+        selectedCity: city.name,
+        currentWeather: weather.current
+      }
+    ));
   };
   var Weather_default = Weather;
 
   // src/index.tsx
-  var root = import_client.default.createRoot(
-    document.getElementById("root")
-  );
+  var root = import_client.default.createRoot(document.getElementById("root"));
   root.render(
     /* @__PURE__ */ import_react4.default.createElement(import_react4.default.StrictMode, null, /* @__PURE__ */ import_react4.default.createElement(Weather_default, null))
   );

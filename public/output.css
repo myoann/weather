@@ -1,3 +1,92 @@
+/* src/components/Weather/index.css */
+.weather {
+  width: 100vw;
+  height: 100vh;
+  background: aliceblue;
+}
+
+/* src/components/SearchForm/index.css */
+.search-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.search-form-result {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.search-form-result .location-search-input {
+  background-color: white;
+}
+.location-search-input {
+  cursor: pointer;
+  background: url(./search-icon-F266S5RP.png);
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 10px 20px 10px 30px;
+  margin: 0;
+  border: 0;
+  border-radius: 8px;
+  width: 250px;
+  outline: none;
+}
+.location-search-input:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+.autocomplete-dropdown-container {
+  position: absolute;
+  width: 300px;
+}
+.suggestion-item,
+.suggestion-item--active {
+  cursor: pointer;
+  padding: 5px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.suggestion-item:hover,
+.suggestion-item--active:hover {
+  cursor: pointer;
+  padding: 5px !important;
+}
+.suggestion-item {
+  background-color: #ffffff;
+}
+.suggestion-item--active {
+  background-color: #fafafa;
+}
+
+/* src/components/WeatherResult/index.css */
+.weatherResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.weatherResult h2,
+.weatherResult p {
+  color: white;
+}
+.temperature {
+  color: white;
+  font-weight: bold;
+  font-size: 7em;
+}
+.weatherBg {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10%;
+  height: 100%;
+  width: 100%;
+}
+
 /* src/index.css */
 body {
   margin: 0;
@@ -13,6 +102,7 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,48 +114,4 @@ code {
     Consolas,
     "Courier New",
     monospace;
-}
-
-/* src/components/Weather/index.css */
-input {
-  background: url(./search-icon-F266S5RP.png);
-  padding: 0;
-  margin: 0;
-  border: 1px solid red;
-  border-radius: 4px;
-}
-
-/* src/components/SearchForm/index.css */
-.location-search-input {
-  background: url(./search-icon-F266S5RP.png);
-  padding: 0;
-  margin: 0;
-  border: 1px solid red;
-  border-radius: 4px;
-}
-.autocomplete-dropdown-container {
-  width: 250px;
-  border: 1px solid green;
-}
-.suggestion-item {
-  background-color: #ffffff;
-  cursor: pointer;
-}
-.suggestion-item--active {
-  background-color: #fafafa;
-  cursor: pointer;
-}
-
-/* src/components/WeatherResult/index.css */
-.weatherResult {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-.weatherResult h2,
-.weatherResult p {
-  mix-blend-mode: lighten;
-  background-color: rgba(255, 255, 255, 1);
 }
