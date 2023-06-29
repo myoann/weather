@@ -35,7 +35,7 @@ export interface ICurrentWeather {
     }>
 }
 
-interface WeatherData {
+interface IWeatherData {
     current: ICurrentWeather
 }
 
@@ -43,12 +43,7 @@ const API_KEY = 'd16e5782314dce82f8f8203626ada68d'
 
 const Weather: React.FC = () => {
     const [city, setSelectedCity] = useState<City | null>(null)
-    // const [address, setAddress] = useState("");
-    const [weather, setWeather] = useState<WeatherData | null>(null)
-
-    /* const handleChange = (address: any) => {
-    setAddress(address);
-  }; */
+    const [weather, setWeather] = useState<IWeatherData | null>(null)
 
     const handleSelect = async (address: string): Promise<void> => {
         const geocode = await geocodeByAddress(address)
@@ -67,12 +62,10 @@ const Weather: React.FC = () => {
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
             if (city != null) {
-                const { data, ...rest } = await axios.get(
+                const { data } = await axios.get(
                     `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
                 )
 
-                console.log(data)
-                console.log(rest)
                 setWeather(data)
             }
         }
@@ -80,34 +73,8 @@ const Weather: React.FC = () => {
         void fetchWeather()
     }, [city])
 
-    // When the component mounts, get the user's location
-    /* useEffect(() => {
-    const successCallback = (position: any) => {
-      const { latitude, longitude } = position.coords;
-      setSelectedCity({
-        name: "Your Location",
-        latitude,
-        longitude,
-      });
-    };
-
-    const errorCallback = (error: any) => {
-      console.error(error);
-    };
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  }, []); */
-
     return (
         <div className="weather">
-            {/*   Would you like to see the weather of  <a onClick={() => handleSelect("Paris")}>Paris</a> ?
-
-      <br />
-      OR  */}
             <SearchForm
                 onSelect={handleSelect}
                 selectedCity={city?.name ?? null}

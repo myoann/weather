@@ -12,16 +12,17 @@ const SearchForm = ({
     selectedCity,
     onSelect,
 }: ISearchFormProps): ReactNode => {
-    const [address, setAddress] = useState(selectedCity ?? '')
+    const [address, setAddress] = useState('')
 
+    console.log('selectedCity', selectedCity)
     return (
         <div
             className={
-                selectedCity !== null ? 'search-form-result' : 'search-form'
+                selectedCity !== null ? 'searchFormResult' : 'searchForm'
             }
         >
             <PlacesAutocomplete
-                value={address}
+                value={selectedCity !== null ? 'ok' : address}
                 onChange={(address) => {
                     setAddress(address)
                 }}
@@ -37,19 +38,20 @@ const SearchForm = ({
                         <input
                             {...getInputProps({
                                 placeholder: 'Search for a city',
-                                className: 'location-search-input',
+                                className: 'locationSearchInput',
                             })}
+                            value={address}
                         />
 
-                        <div className="autocomplete-dropdown-container">
+                        <div className="autocompleteDropdownContainer">
                             {loading && <div>Loading...</div>}
                             {suggestions.map((suggestion) => (
                                 <div
                                     {...getSuggestionItemProps(suggestion)}
                                     className={
                                         suggestion.active
-                                            ? 'suggestion-item--active'
-                                            : 'suggestion-item'
+                                            ? 'suggestionItem--active'
+                                            : 'suggestionItem'
                                     }
                                     key={suggestion.placeId}
                                 >

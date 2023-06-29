@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState4(initialState) {
+          function useState3(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect3(create, deps) {
+          function useEffect2(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,7 +1879,7 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect3;
+          exports.useEffect = useEffect2;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState4;
+          exports.useState = useState3;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -27040,16 +27040,17 @@
     selectedCity,
     onSelect
   }) => {
-    const [address, setAddress] = (0, import_react.useState)(selectedCity ?? "");
+    const [address, setAddress] = (0, import_react.useState)("");
+    console.log("selectedCity", selectedCity);
     return /* @__PURE__ */ import_react.default.createElement(
       "div",
       {
-        className: selectedCity !== null ? "search-form-result" : "search-form"
+        className: selectedCity !== null ? "searchFormResult" : "searchForm"
       },
       /* @__PURE__ */ import_react.default.createElement(
         import_react_places_autocomplete.default,
         {
-          value: address,
+          value: selectedCity !== null ? "ok" : address,
           onChange: (address2) => {
             setAddress(address2);
           },
@@ -27065,14 +27066,15 @@
           {
             ...getInputProps({
               placeholder: "Search for a city",
-              className: "location-search-input"
-            })
+              className: "locationSearchInput"
+            }),
+            value: address
           }
-        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "autocomplete-dropdown-container" }, loading && /* @__PURE__ */ import_react.default.createElement("div", null, "Loading..."), suggestions.map((suggestion) => /* @__PURE__ */ import_react.default.createElement(
+        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "autocompleteDropdownContainer" }, loading && /* @__PURE__ */ import_react.default.createElement("div", null, "Loading..."), suggestions.map((suggestion) => /* @__PURE__ */ import_react.default.createElement(
           "div",
           {
             ...getSuggestionItemProps(suggestion),
-            className: suggestion.active ? "suggestion-item--active" : "suggestion-item",
+            className: suggestion.active ? "suggestionItem--active" : "suggestionItem",
             key: suggestion.placeId
           },
           /* @__PURE__ */ import_react.default.createElement("span", null, suggestion.description)
@@ -27088,25 +27090,26 @@
   // src/uvRatings.ts
   var lowExposure = {
     risk: "Low",
-    color: "green",
+    color: "#009000",
     description: "Low exposure. No sun protection needed."
   };
   var moderateExposure = {
     risk: "Moderate",
-    color: "yellow",
+    color: "#AFAF00",
     description: "Moderate exposure. Think about sun protection, especially between 11am-3pm."
   };
   var highExposure = {
     risk: "High",
-    color: "orange",
+    color: "#BA7900",
     description: "High exposure. Skin protection needed for most skin tones."
   };
   var veryHighExposure = {
     risk: "Very High",
-    color: "red",
+    color: "#A70000",
     description: "Very high exposure. Skin protection needed for all skin tones."
   };
   var uvRatings = {
+    0: lowExposure,
     1: lowExposure,
     2: lowExposure,
     3: moderateExposure,
@@ -27118,6 +27121,39 @@
     9: veryHighExposure
   };
 
+  // src/assets/images/thunderstorm.gif
+  var thunderstorm_default = "/assets/thunderstorm-K5P2PVZ4.gif";
+
+  // src/assets/images/thunderstorm-and-rain.gif
+  var thunderstorm_and_rain_default = "/assets/thunderstorm-and-rain-W43OZVHP.gif";
+
+  // src/assets/images/drizzle.gif
+  var drizzle_default = "/assets/drizzle-PHW5YHI2.gif";
+
+  // src/assets/images/high-drizzle.gif
+  var high_drizzle_default = "/assets/high-drizzle-3GZVYN6Q.gif";
+
+  // src/assets/images/rain.gif
+  var rain_default = "/assets/rain-WMRBE25Y.gif";
+
+  // src/assets/images/snow.gif
+  var snow_default = "/assets/snow-O63NBBSM.gif";
+
+  // src/assets/images/fog.gif
+  var fog_default = "/assets/fog-J5PLUPCQ.gif";
+
+  // src/assets/images/tornado.gif
+  var tornado_default = "/assets/tornado-MH5XDTB3.gif";
+
+  // src/assets/images/clear-sky.gif
+  var clear_sky_default = "/assets/clear-sky-4EO545U6.gif";
+
+  // src/assets/images/clouds.gif
+  var clouds_default = "/assets/clouds-CGDABIZS.gif";
+
+  // src/assets/images/high-clouds.gif
+  var high_clouds_default = "/assets/high-clouds-NZERBVJ6.gif";
+
   // src/weatherConditionCodes.ts
   var weatherConditionCodes = [
     {
@@ -27125,445 +27161,433 @@
       main: "Thunderstorm",
       description: "thunderstorm with light rain",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_and_rain_default
     },
     {
       id: 201,
       main: "Thunderstorm",
       description: "thunderstorm with rain",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_and_rain_default
     },
     {
       id: 202,
       main: "Thunderstorm",
       description: "thunderstorm with heavy rain",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_and_rain_default
     },
     {
       id: 210,
       main: "Thunderstorm",
       description: "light thunderstorm",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 211,
       main: "Thunderstorm",
       description: "thunderstorm",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 212,
       main: "Thunderstorm",
       description: "heavy thunderstorm",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 221,
       main: "Thunderstorm",
       description: "ragged thunderstorm",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 230,
       main: "Thunderstorm",
       description: "thunderstorm with light drizzle",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 231,
       main: "Thunderstorm",
       description: "thunderstorm with drizzle",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 232,
       main: "Thunderstorm",
       description: "thunderstorm with heavy drizzle",
       icon: "11d",
-      image: "../../assets/images/clouds-1.gif"
+      image: thunderstorm_default
     },
     {
       id: 300,
       main: "Drizzle",
       description: "light intensity drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: drizzle_default
     },
     {
       id: 301,
       main: "Drizzle",
       description: "drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: drizzle_default
     },
     {
       id: 302,
       main: "Drizzle",
       description: "heavy intensity drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_drizzle_default
     },
     {
       id: 310,
       main: "Drizzle",
       description: "light intensity drizzle rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: drizzle_default
     },
     {
       id: 311,
       main: "Drizzle",
       description: "drizzle rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: drizzle_default
     },
     {
       id: 312,
       main: "Drizzle",
       description: "heavy intensity drizzle rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_drizzle_default
     },
     {
       id: 313,
       main: "Drizzle",
       description: "shower rain and drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_drizzle_default
     },
     {
       id: 314,
       main: "Drizzle",
       description: "heavy shower rain and drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_drizzle_default
     },
     {
       id: 321,
       main: "Drizzle",
       description: "shower drizzle",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_drizzle_default
     },
     {
       id: 500,
       main: "Rain",
       description: "light rain",
       icon: "10d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 501,
       main: "Rain",
       description: "moderate rain",
       icon: "10d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 502,
       main: "Rain",
       description: "heavy intensity rain",
       icon: "10d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 503,
       main: "Rain",
       description: "very heavy rain",
       icon: "10d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 504,
       main: "Rain",
       description: "extreme rain",
       icon: "10d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 511,
       main: "Rain",
       description: "freezing rain",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 520,
       main: "Rain",
       description: "light intensity shower rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 521,
       main: "Rain",
       description: "shower rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 522,
       main: "Rain",
       description: "heavy intensity shower rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 531,
       main: "Rain",
       description: "ragged shower rain",
       icon: "09d",
-      image: "../../assets/images/clouds-1.gif"
+      image: rain_default
     },
     {
       id: 600,
       main: "Snow",
       description: "light snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 601,
       main: "Snow",
       description: "snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 602,
       main: "Snow",
       description: "heavy snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 611,
       main: "Snow",
       description: "sleet",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 612,
       main: "Snow",
       description: "light shower sleet",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 613,
       main: "Snow",
       description: "shower sleet",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 615,
       main: "Snow",
       description: "light rain and snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 616,
       main: "Snow",
       description: "rain and snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 620,
       main: "Snow",
       description: "light shower snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 621,
       main: "Snow",
       description: "shower snow",
-      icon: "13d"
+      icon: "13d",
+      image: snow_default
     },
     {
       id: 622,
       main: "Snow",
       description: "heavy shower snow",
       icon: "13d",
-      image: "../../assets/images/clouds-1.gif"
+      image: snow_default
     },
     {
       id: 701,
       main: "Mist",
       description: "mist",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 711,
       main: "Smoke",
       description: "smoke",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 721,
       main: "Haze",
       description: "haze",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 731,
       main: "Dust",
       description: "sand/dust whirls",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 741,
       main: "Fog",
       description: "fog",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: fog_default
     },
     {
       id: 751,
       main: "Sand",
       description: "sand",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 761,
       main: "Dust",
       description: "dust",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 762,
       main: "Ash",
       description: "volcanic ash",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 771,
       main: "Squall",
       description: "squalls",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 781,
       main: "Tornado",
       description: "tornado",
       icon: "50d",
-      image: "../../assets/images/clouds-1.gif"
+      image: tornado_default
     },
     {
       id: 800,
       main: "Clear",
       description: "clear sky",
       icon: "01d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clear_sky_default
     },
     {
       id: 801,
       main: "Clouds",
       description: "few clouds: 11-25%",
       icon: "02d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 802,
       main: "Clouds",
       description: "scattered clouds: 25-50%",
       icon: "03d",
-      image: "../../assets/images/clouds-1.gif"
+      image: clouds_default
     },
     {
       id: 803,
       main: "Clouds",
       description: "broken clouds: 51-84%",
-      icon: "04d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_clouds_default
     },
     {
       id: 804,
       main: "Clouds",
       description: "overcast clouds: 85-100%",
-      icon: "04d",
-      image: "../../assets/images/clouds-1.gif"
+      image: high_clouds_default
     }
   ];
 
   // src/components/WeatherResult/index.tsx
-  var API_KEY = "AIzaSyDPNJMIi_sg1u8exgAVFWLv2hs5fUa3QIM";
-  var CX = "50627cd5f9ec24744";
-  var customSearchUrl = (query) => `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image&imgType=photo`;
   var WeatherResult = ({
     selectedCity,
     currentWeather
   }) => {
-    const [image, setImage] = (0, import_react2.useState)(null);
-    (0, import_react2.useEffect)(() => {
-      const getImage = async () => {
-        const query = `"${currentWeather.weather[0].main}" in the city of ${selectedCity}`;
-        const url = customSearchUrl(query);
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        setImage(data.items[0].link);
-      };
-      void getImage();
-    }, [selectedCity]);
-    if (image === null) {
-      return null;
-    }
     const weatherCondition = weatherConditionCodes.find(
       (item) => item.id === currentWeather.weather[0].id
     );
     const secondImage = weatherCondition?.image;
     const sunrise = new Date(currentWeather.sunrise * 1e3).toLocaleTimeString();
-    const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 3);
+    const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 6);
     const sunset = new Date(currentWeather.sunset * 1e3).toLocaleTimeString();
-    const sunsetWithoutSeconds = sunset.slice(0, sunset.length - 3);
+    const sunsetWithoutSeconds = sunset.slice(0, sunset.length - 6);
     const temperature = Math.trunc(currentWeather.temp);
-    const feelsLike = Math.trunc(currentWeather.feels_like);
     const uvIndex = currentWeather.uvi;
     const uvIndexInt = Math.trunc(uvIndex);
     let uvRatingRisk;
     let uvRatingDescription;
-    if (uvIndexInt >= 1 && uvIndexInt <= 9) {
+    let uvTextColor = "#FFF";
+    if (uvIndexInt >= 0 && uvIndexInt <= 9) {
       uvRatingRisk = uvRatings[uvIndexInt].risk;
       uvRatingDescription = uvRatings[uvIndexInt].description;
+      uvTextColor = uvRatings[uvIndexInt].color;
     }
-    const thirdImage = "https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/weather/rain/raindrops-misted-on-a-windscreen.jpg";
     return /* @__PURE__ */ import_react2.default.createElement(
       "div",
       {
         className: "weatherResult",
         style: {
-          background: `url(${thirdImage})`,
+          background: secondImage !== null && secondImage !== void 0 ? `url(${secondImage})` : "none",
           backgroundSize: "cover"
         }
       },
-      /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherBg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "temperature" }, temperature, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Feels like: ", feelsLike, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("h2", null, selectedCity), /* @__PURE__ */ import_react2.default.createElement("p", null, currentWeather.weather[0].description), /* @__PURE__ */ import_react2.default.createElement("p", null, "Humidity: ", currentWeather.humidity, "%"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "UV INDEX"), /* @__PURE__ */ import_react2.default.createElement("p", null, "UVI: ", uvIndex), uvRatingRisk, uvRatingDescription, /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "SUNRISE & SUNSET"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunrise at: ", sunriseWithoutSeconds), /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunset at: ", sunsetWithoutSeconds), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "WIND"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind speed: ", currentWeather.wind_speed, " km/h"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind direction: ", currentWeather.wind_deg, "\xB0"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("h2", null, "Feels Like"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Feels like: ", feelsLike, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("img", { src: secondImage, alt: "Flowers" }), secondImage !== null && /* @__PURE__ */ import_react2.default.createElement("picture", null, /* @__PURE__ */ import_react2.default.createElement("img", { src: secondImage, alt: "Flowers" })))
+      /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherBg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "temperature" }, temperature, "\xB0C"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "city" }, selectedCity), /* @__PURE__ */ import_react2.default.createElement("div", { className: "description" }, currentWeather.weather[0].description), /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherGrid" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherGridElement" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, "UV INDEX"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "content" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "uvi", style: { color: uvTextColor } }, uvIndexInt), /* @__PURE__ */ import_react2.default.createElement(
+        "div",
+        {
+          className: "uvRatingRisk",
+          style: { color: uvTextColor }
+        },
+        uvRatingRisk
+      ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "uvRatingDescription" }, uvRatingDescription))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherGridElement" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, "SUNRISE"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "content" }, /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunrise at ", sunriseWithoutSeconds, " AM"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Sunset at ", sunsetWithoutSeconds, " PM"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherGridElement" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, "WIND"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "content" }, /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind speed: ", currentWeather.wind_speed, " km/h"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Wind direction: ", currentWeather.wind_deg, "\xB0"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "weatherGridElement" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, "HUMIDITY"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "content" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "humidity" }, currentWeather.humidity, "%")))))
     );
   };
   var WeatherResult_default = WeatherResult;
 
   // src/components/Weather/index.tsx
-  var API_KEY2 = "d16e5782314dce82f8f8203626ada68d";
+  var API_KEY = "d16e5782314dce82f8f8203626ada68d";
   var Weather = () => {
     const [city, setSelectedCity] = (0, import_react3.useState)(null);
     const [weather, setWeather] = (0, import_react3.useState)(null);
@@ -27582,10 +27606,8 @@
       const fetchWeather = async () => {
         if (city != null) {
           const { data, ...rest } = await axios_default.get(
-            `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY2}&units=metric`
+            `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
           );
-          console.log(data);
-          console.log(rest);
           setWeather(data);
         }
       };

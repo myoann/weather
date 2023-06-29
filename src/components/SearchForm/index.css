@@ -1,61 +1,62 @@
-.search-form {
+.searchForm {
   position: fixed;
-  top: 50%;
-    left: 50%;
-      transform: translate(-50%, -50%);
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
-.search-form-result {
+.searchFormResult {
   position: fixed;
-  top: 10%;
-    left: 50%;
-      transform: translate(-50%, -50%);
+  top: 10vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
-.search-form-result .location-search-input {
-    background-color: white;
+.searchFormResult .locationSearchInput {
+  background-color: white;
 }
 
-.location-search-input {
+.locationSearchInput {
+  width: 250px;
   cursor: pointer;
   background: url("../../assets/images/search-icon.png");
-    background-position: 10px center;
-      background-repeat: no-repeat;
-      background-size: 15px;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 15px;
   background-color: rgba(0, 0, 0, 0.1);
-    padding: 10px 20px 10px 30px;
+  padding: 10px 20px 10px 30px;
   margin: 0;
   border: 0;
   border-radius: 8px;
-  width: 250px;
   outline: none;
 }
 
-.location-search-input:focus {
+.locationSearchInput:focus {
   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
 }
 
-.autocomplete-dropdown-container {
+.autocompleteDropdownContainer{
   position: absolute;
   width: 300px;
 }
 
-.suggestion-item, .suggestion-item--active {
+.suggestionItem, .suggestionItem--active {
   cursor: pointer;
   padding: 5px !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.suggestion-item:hover,
-.suggestion-item--active:hover {
-    cursor: pointer;
-    padding: 5px !important;
+.suggestionItem:hover,
+.suggestionItem--active:hover {
+  cursor: pointer;
+  padding: 5px !important;
 }
 
-.suggestion-item {
-  background-color: #ffffff;
+.suggestionItem {
+  background-color: #FFF;
 }
 
-.suggestion-item--active {
-  background-color: #fafafa;
+.suggestionItem--active {
+  background-color: #FAFAFA;
 }

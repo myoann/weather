@@ -1,4 +1,4 @@
-import React, { type ReactNode, useEffect, useState } from 'react'
+import React, { type ReactNode } from 'react'
 // import { customsearch_v1 } from "@googleapis/customsearch";
 
 import { uvRatings } from '../../uvRatings'
@@ -6,13 +6,6 @@ import { weatherConditionCodes } from '../../weatherConditionCodes'
 import { type ICurrentWeather } from '../Weather'
 
 import './index.css'
-
-const API_KEY = 'AIzaSyDPNJMIi_sg1u8exgAVFWLv2hs5fUa3QIM'
-
-const CX = '50627cd5f9ec24744'
-
-const customSearchUrl = (query: string): string =>
-    `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${query}&searchType=image&imgType=photo`
 
 interface IWeatherResult {
     selectedCity: string
@@ -53,100 +46,93 @@ const WeatherResult = ({
     selectedCity,
     currentWeather,
 }: IWeatherResult): ReactNode => {
-    const [image, setImage] = useState<string | null>(null)
-
-    useEffect(() => {
-        const getImage = async (): Promise<void> => {
-            const query = `"${currentWeather.weather[0].main}" in the city of ${selectedCity}`
-            const url = customSearchUrl(query)
-
-            const response = await fetch(url)
-            const data = await response.json()
-            console.log(data)
-
-            setImage(data.items[0].link)
-        }
-
-        void getImage()
-    }, [selectedCity])
-
-    if (image === null) {
-        return null
-    }
-
     const weatherCondition = weatherConditionCodes.find(
         (item) => item.id === currentWeather.weather[0].id
     )
-    const secondImage = weatherCondition?.image
+    const secondImage: string = weatherCondition?.image
 
     const sunrise = new Date(currentWeather.sunrise * 1000).toLocaleTimeString()
-    const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 3)
+    const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 6)
 
     const sunset = new Date(currentWeather.sunset * 1000).toLocaleTimeString()
-    const sunsetWithoutSeconds = sunset.slice(0, sunset.length - 3)
+    const sunsetWithoutSeconds = sunset.slice(0, sunset.length - 6)
 
     const temperature = Math.trunc(currentWeather.temp)
-    const feelsLike = Math.trunc(currentWeather.feels_like)
 
     const uvIndex = currentWeather.uvi
     const uvIndexInt = Math.trunc(uvIndex)
     let uvRatingRisk
     let uvRatingDescription
+    let uvTextColor = '#FFF'
 
-    if (uvIndexInt >= 1 && uvIndexInt <= 9) {
+    if (uvIndexInt >= 0 && uvIndexInt <= 9) {
         uvRatingRisk = uvRatings[uvIndexInt].risk
         uvRatingDescription = uvRatings[uvIndexInt].description
+        uvTextColor = uvRatings[uvIndexInt].color
     }
 
-    const thirdImage =
-        'https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/weather/rain/raindrops-misted-on-a-windscreen.jpg'
     return (
         <div
             className="weatherResult"
             style={{
-                background: `url(${thirdImage})`,
+                background:
+                    secondImage !== null && secondImage !== undefined
+                        ? `url(${secondImage})`
+                        : 'none',
                 backgroundSize: 'cover',
             }}
         >
             <div className="weatherBg">
                 <div className="temperature">{temperature}°C</div>
-                <p>Feels like: {feelsLike}°C</p>
-                <h2>{selectedCity}</h2>
-                <p>{currentWeather.weather[0].description}</p>
-                <p>Humidity: {currentWeather.humidity}%</p>
+                <div className="city">{selectedCity}</div>
+                <div className="description">
+                    {currentWeather.weather[0].description}
+                </div>
 
-                <br />
-                <h2>UV INDEX</h2>
-                <p>UVI: {uvIndex}</p>
-                {uvRatingRisk}
-                {uvRatingDescription}
-                <br />
+                <div className="weatherGrid">
+                    <div className="weatherGridElement">
+                        <h2>UV INDEX</h2>
+                        <div className="content">
+                            <div className="uvi" style={{ color: uvTextColor }}>
+                                {uvIndexInt}
+                            </div>
+                            <div
+                                className="uvRatingRisk"
+                                style={{ color: uvTextColor }}
+                            >
+                                {uvRatingRisk}
+                            </div>
+                            <div className="uvRatingDescription">
+                                {uvRatingDescription}
+                            </div>
+                        </div>
+                    </div>
 
-                <br />
-                <h2>SUNRISE & SUNSET</h2>
-                <p>Sunrise at: {sunriseWithoutSeconds}</p>
-                <p>Sunset at: {sunsetWithoutSeconds}</p>
-                <br />
+                    <div className="weatherGridElement">
+                        <h2>SUNRISE</h2>
+                        <div className="content">
+                            <p>Sunrise at {sunriseWithoutSeconds} AM</p>
+                            <p>Sunset at {sunsetWithoutSeconds} PM</p>
+                        </div>
+                    </div>
 
-                <br />
-                <h2>WIND</h2>
-                <p>Wind speed: {currentWeather.wind_speed} km/h</p>
-                <p>Wind direction: {currentWeather.wind_deg}°</p>
-                <br />
+                    <div className="weatherGridElement">
+                        <h2>WIND</h2>
+                        <div className="content">
+                            <p>Wind speed: {currentWeather.wind_speed} km/h</p>
+                            <p>Wind direction: {currentWeather.wind_deg}°</p>
+                        </div>
+                    </div>
 
-                <br />
-                <h2>Feels Like</h2>
-                <p>Feels like: {feelsLike}°C</p>
-                {/* Comment if the difference regarding the actual temperature is similar or no */}
-
-                <br />
-
-                <img src={secondImage} alt="Flowers" />
-                {secondImage !== null && (
-                    <picture>
-                        <img src={secondImage} alt="Flowers" />
-                    </picture>
-                )}
+                    <div className="weatherGridElement">
+                        <h2>HUMIDITY</h2>
+                        <div className="content">
+                            <div className="humidity">
+                                {currentWeather.humidity}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
