@@ -34,6 +34,9 @@ Build the project
 Runs the app in the development mode.\
 Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 
+In order to make it work, please provide the WEATHER_API_KEY as an environment variable such as : `WEATHER_API_KEY=testapi029 npm run start`
+You also need to replace YOUR_API_KEY inside the file index.html by your Google Maps API key
+
 You will also see any lint errors in the console.
 
 ### `npm lint`
