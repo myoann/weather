@@ -25,7 +25,11 @@ The app will be available at http://localhost:8000.
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run build`
+
+Build the project
+
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:8000](http://localhost:8000) to view it in the browser.

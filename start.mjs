@@ -1,4 +1,4 @@
-import { ctx } from './build.mjs'
+import { ctx } from './buildContext.mjs'
 
 await ctx.watch()
 
