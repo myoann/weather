@@ -16,9 +16,8 @@ export function defineProcessEnv() {
     return definitions
 }
 
-const ctx = await context({
+export const ctx = await context({
     entryPoints: ['src/index.tsx'],
-    //  inject: ['./env-proxy.js'],
     bundle: true,
     outfile: './public/output.js',
     publicPath: '/',
@@ -31,13 +30,3 @@ const ctx = await context({
     define: defineProcessEnv(),
     plugins: [eslint()],
 })
-
-await ctx.watch()
-
-await ctx.serve({
-    servedir: './public',
-    host: 'localhost',
-    port: 8000,
-})
-
-console.log('Server is active on http://localhost:8000')

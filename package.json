@@ -10,7 +10,8 @@
     "react-places-autocomplete": "^7.3.0"
   },
   "scripts": {
-    "start": "node build.mjs",
+    "build": "node build.mjs",
+    "start": "node start.mjs",
     "lint": "eslint --fix --ext .ts,.tsx ."
   },
   "devDependencies": {
