@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import axios from 'axios'
 
-import './index.css'
-
 import SearchForm from '../SearchForm'
 import WeatherResult from '../WeatherResult'
+
+import './index.css'
 
 interface City {
     name: string
@@ -39,8 +39,6 @@ interface IWeatherData {
     current: ICurrentWeather
 }
 
-const API_KEY = 'd16e5782314dce82f8f8203626ada68d'
-
 const Weather: React.FC = () => {
     const [city, setSelectedCity] = useState<City | null>(null)
     const [weather, setWeather] = useState<IWeatherData | null>(null)
@@ -61,9 +59,10 @@ const Weather: React.FC = () => {
 
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
-            if (city != null) {
+            if (city != null && process.env.API_KEY != null) {
+                //  console.log('ENVNVNVNV', process.env.API_KEY)
                 const { data } = await axios.get(
-                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${process.env.API_KEY}&units=metric`
                 )
 
                 setWeather(data)

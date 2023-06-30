@@ -4,7 +4,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  color: white;
+  color: #FFF;
 }
 
 .temperature {
@@ -29,7 +29,7 @@
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
 }
 
 .weatherGrid {

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@googleapis/customsearch": "^1.0.0",
     "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-places-autocomplete": "^7.3.0"
@@ -19,6 +19,7 @@
     "@types/react-dom": "^18.2.6",
     "@types/react-places-autocomplete": "^7.2.9",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "cross-env": "^7.0.3",
     "esbuild": "^0.17.14",
     "esbuild-plugin-eslint": "^0.3.6",
     "eslint": "^8.43.0",

@@ -1,4 +1,4 @@
-import React, { type ReactNode, useState } from 'react'
+import React, { type ReactNode, useState, useEffect } from 'react'
 import PlacesAutocomplete from 'react-places-autocomplete'
 
 import './index.css'
@@ -14,7 +14,12 @@ const SearchForm = ({
 }: ISearchFormProps): ReactNode => {
     const [address, setAddress] = useState('')
 
-    console.log('selectedCity', selectedCity)
+    useEffect(() => {
+        if (selectedCity !== null) {
+            setAddress('')
+        }
+    }, [selectedCity])
+
     return (
         <div
             className={
@@ -22,7 +27,7 @@ const SearchForm = ({
             }
         >
             <PlacesAutocomplete
-                value={selectedCity !== null ? 'ok' : address}
+                value={address}
                 onChange={(address) => {
                     setAddress(address)
                 }}
@@ -40,7 +45,7 @@ const SearchForm = ({
                                 placeholder: 'Search for a city',
                                 className: 'locationSearchInput',
                             })}
-                            value={address}
+                            // value={address}
                         />
 
                         <div className="autocompleteDropdownContainer">

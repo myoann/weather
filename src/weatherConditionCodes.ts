@@ -8,6 +8,7 @@ import FogImage from './assets/images/fog.gif'
 import TornadoImage from './assets/images/tornado.gif'
 import ClearImage from './assets/images/clear-sky.gif'
 import CloudsImage from './assets/images/clouds.gif'
+import CloudsAndSunImage from './assets/images/clouds-sun.gif'
 import HighCloudsImage from './assets/images/high-clouds.gif'
 
 export const weatherConditionCodes = [
@@ -296,7 +297,7 @@ export const weatherConditionCodes = [
         main: 'Mist',
         description: 'mist',
         icon: '50d',
-        image: CloudsImage,
+        image: FogImage,
     },
     {
         id: 711,
@@ -373,7 +374,7 @@ export const weatherConditionCodes = [
         main: 'Clouds',
         description: 'few clouds: 11-25%',
         icon: '02d',
-        image: CloudsImage,
+        image: CloudsAndSunImage,
     },
     {
         id: 802,
