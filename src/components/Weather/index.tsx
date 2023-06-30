@@ -59,10 +59,9 @@ const Weather: React.FC = () => {
 
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
-            if (city != null && process.env.API_KEY != null) {
-                //  console.log('ENVNVNVNV', process.env.API_KEY)
+            if (city != null && process.env.WEATHER_API_KEY != null) {
                 const { data } = await axios.get(
-                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${process.env.API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${process.env.WEATHER_API_KEY}&units=metric`
                 )
 
                 setWeather(data)
