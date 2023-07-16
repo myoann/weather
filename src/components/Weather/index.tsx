@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
 import SearchForm from '../SearchForm'
@@ -7,40 +8,44 @@ import WeatherResult from '../WeatherResult'
 
 import './index.css'
 
-interface City {
-    name: string
+interface ICity {
     latitude: number
     longitude: number
+    name: string
 }
 
 export interface ICurrentWeather {
+    clouds: number
+    dew_point: number
     dt: number
+    feels_like: number
+    humidity: number
+    pressure: number
     sunrise: number
     sunset: number
-    temp: number
-    feels_like: number
-    pressure: number
-    humidity: number
-    dew_point: number
+    temp: number | { day: number; min: number; max: number }
     uvi: number
-    clouds: number
     visibility: number
-    wind_speed: number
-    wind_deg: number
     weather: Array<{
         id: number
         main: string
         description: string
         icon: string
     }>
+    wind_deg: number
+    wind_speed: number
+    rain?: number
 }
 
 interface IWeatherData {
     current: ICurrentWeather
+    daily: ICurrentWeather[]
 }
 
+const API_KEY = 'WEATHER_API_KEY'
+
 const Weather: React.FC = () => {
-    const [city, setSelectedCity] = useState<City | null>(null)
+    const [city, setSelectedCity] = useState<ICity | null>(null)
     const [weather, setWeather] = useState<IWeatherData | null>(null)
 
     const handleSelect = async (address: string): Promise<void> => {
@@ -57,11 +62,35 @@ const Weather: React.FC = () => {
         }
     }
 
+    // On page load, call the API to get the weather for the selected city if there is one in the URL
+    const [searchParams] = useSearchParams()
+    const cityName = searchParams.get('city')
+
+    useEffect(() => {
+        const fetchCity = async (): Promise<void> => {
+            if (cityName != null) {
+                const geocode = await geocodeByAddress(cityName)
+
+                if (geocode.length > 0) {
+                    const { lat, lng } = await getLatLng(geocode[0])
+
+                    setSelectedCity({
+                        name: cityName,
+                        latitude: lat,
+                        longitude: lng,
+                    })
+                }
+            }
+        }
+
+        void fetchCity()
+    }, [cityName])
+
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
-            if (city != null && process.env.WEATHER_API_KEY != null) {
+            if (city != null && API_KEY != null) {
                 const { data } = await axios.get(
-                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${process.env.WEATHER_API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
                 )
 
                 setWeather(data)
@@ -82,6 +111,7 @@ const Weather: React.FC = () => {
                 <WeatherResult
                     selectedCity={city.name}
                     currentWeather={weather.current}
+                    followingDaysWeather={weather.daily}
                 />
             )}
         </div>

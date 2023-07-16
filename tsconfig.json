@@ -4,9 +4,8 @@
     "strict": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "./public",
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"],
 }

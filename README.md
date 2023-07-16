@@ -1,7 +1,5 @@
 # Weather App
 
-Demo here [https://golden-semifreddo-74e3ef.netlify.app/](https://golden-semifreddo-74e3ef.netlify.app/)
-
 This is a simple weather app that allows users to search for a city or country and view the current weather conditions. The app uses the OpenWeatherMap API to fetch weather data for the selected location.
 
 ## Features

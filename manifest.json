@@ -1,0 +1,7 @@
+{
+  "short_name": "Weather",
+  "name": "Weather App",
+  "display": "standalone",
+  "theme_color": "#000",
+  "background_color": "#fff"
+}

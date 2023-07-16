@@ -1,0 +1,47 @@
+.tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.tabs-buttons {
+    background: rgb(176 176 176 / 50%);
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.tab-button,
+.tab-button-active {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 0;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.tab-button-active {
+    font-weight: bold;
+    background: white;
+    color: black;
+}
+
+@media (orientation: portrait) {
+    .tabs {
+        justify-content: center;
+        margin-top: 0;
+    }
+
+    .tabs-title {
+        display: none;
+    }
+
+    .tab-button,
+    .tab-button-active {
+        padding: 5px 10px;
+        font-size: 0.75em;
+    }
+}

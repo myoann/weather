@@ -1,62 +1,63 @@
-.searchForm {
-  position: fixed;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
+.search-form {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
 }
 
-.searchFormResult {
-  position: fixed;
-  top: 10vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+.search-form-result {
+    position: fixed;
+    top: 10vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
-.searchFormResult .locationSearchInput {
-  background-color: white;
+.search-form-result .location-search-input {
+    background-color: white;
 }
 
-.locationSearchInput {
-  width: 250px;
-  cursor: pointer;
-  background: url("../../assets/images/search-icon.png");
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  background-size: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px 20px 10px 30px;
-  margin: 0;
-  border: 0;
-  border-radius: 8px;
-  outline: none;
+.location-search-input {
+    width: 250px;
+    cursor: pointer;
+    background: url('../../assets/images/search-icon.png');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-color: rgb(255 255 255 / 50%);
+    padding: 10px 20px 10px 30px;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+    outline: none;
 }
 
-.locationSearchInput:focus {
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+.location-search-input:focus {
+    box-shadow: 0 0 5px rgb(81 203 238 / 100%);
 }
 
-.autocompleteDropdownContainer{
-  position: absolute;
-  width: 300px;
+.autocomplete-dropdown-container {
+    position: absolute;
+    width: 300px;
 }
 
-.suggestionItem, .suggestionItem--active {
-  cursor: pointer;
-  padding: 5px !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+.suggestion-item,
+.suggestion-item-active {
+    cursor: pointer;
+    padding: 5px !important;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
 }
 
-.suggestionItem:hover,
-.suggestionItem--active:hover {
-  cursor: pointer;
-  padding: 5px !important;
+.suggestion-item {
+    background-color: #fff;
 }
 
-.suggestionItem {
-  background-color: #FFF;
+.suggestion-item-active {
+    background-color: #fafafa;
 }
 
-.suggestionItem--active {
-  background-color: #FAFAFA;
+.suggestion-item:hover,
+.suggestion-item-active:hover {
+    cursor: pointer;
+    padding: 5px !important;
 }

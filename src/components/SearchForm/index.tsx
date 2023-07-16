@@ -1,4 +1,4 @@
-import React, { type ReactNode, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PlacesAutocomplete from 'react-places-autocomplete'
 
 import './index.css'
@@ -11,7 +11,7 @@ interface ISearchFormProps {
 const SearchForm = ({
     selectedCity,
     onSelect,
-}: ISearchFormProps): ReactNode => {
+}: ISearchFormProps): JSX.Element => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const SearchForm = ({
     return (
         <div
             className={
-                selectedCity !== null ? 'searchFormResult' : 'searchForm'
+                selectedCity !== null ? 'search-form-result' : 'search-form'
             }
         >
             <PlacesAutocomplete
@@ -43,20 +43,19 @@ const SearchForm = ({
                         <input
                             {...getInputProps({
                                 placeholder: 'Search for a city',
-                                className: 'locationSearchInput',
+                                className: 'location-search-input',
                             })}
-                            // value={address}
                         />
 
-                        <div className="autocompleteDropdownContainer">
+                        <div className="autocomplete-dropdown-container">
                             {loading && <div>Loading...</div>}
                             {suggestions.map((suggestion) => (
                                 <div
                                     {...getSuggestionItemProps(suggestion)}
                                     className={
                                         suggestion.active
-                                            ? 'suggestionItem--active'
-                                            : 'suggestionItem'
+                                            ? 'suggestion-item-active'
+                                            : 'suggestion-item'
                                     }
                                     key={suggestion.placeId}
                                 >

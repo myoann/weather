@@ -1,14 +1,27 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-expect-error
 import ThunderstormImage from './assets/images/thunderstorm.gif'
+// @ts-expect-error
 import ThunderstormAndRainImage from './assets/images/thunderstorm-and-rain.gif'
+// @ts-expect-error
 import DrizzleImage from './assets/images/drizzle.gif'
+// @ts-expect-error
 import HighDrizzleImage from './assets/images/high-drizzle.gif'
+// @ts-expect-error
 import RainImage from './assets/images/rain.gif'
+// @ts-expect-error
 import SnowImage from './assets/images/snow.gif'
+// @ts-expect-error
 import FogImage from './assets/images/fog.gif'
+// @ts-expect-error
 import TornadoImage from './assets/images/tornado.gif'
+// @ts-expect-error
 import ClearImage from './assets/images/clear-sky.gif'
+// @ts-expect-error
 import CloudsImage from './assets/images/clouds.gif'
+// @ts-expect-error
 import CloudsAndSunImage from './assets/images/clouds-sun.gif'
+// @ts-expect-error
 import HighCloudsImage from './assets/images/high-clouds.gif'
 
 export const weatherConditionCodes = [

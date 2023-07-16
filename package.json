@@ -1,38 +1,44 @@
 {
   "name": "weather",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-places-autocomplete": "^7.3.0"
+    "react-places-autocomplete": "^7.3.0",
+    "react-router-dom": "^6.14.1",
+    "recharts": "^2.7.2"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "start": "node start.mjs",
-    "lint": "eslint --fix --ext .ts,.tsx ."
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint --ext .ts,.tsx . && npx stylelint 'src/*.css'",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/node": "^20.3.2",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@types/react-places-autocomplete": "^7.2.9",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@vitejs/plugin-react": "^4.0.3",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.17.14",
-    "esbuild-plugin-eslint": "^0.3.6",
-    "eslint": "^8.43.0",
+    "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-config-standard-with-typescript": "^35.0.0",
+    "eslint-config-standard-with-typescript": "^36.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
+    "stylelint": "^15.10.1",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-prettier": "^4.0.0",
     "ts-loader": "^9.4.4",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6",
+    "vite": "^4.4.4"
   }
 }
