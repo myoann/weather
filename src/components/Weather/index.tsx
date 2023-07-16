@@ -42,7 +42,9 @@ interface IWeatherData {
     daily: ICurrentWeather[]
 }
 
-const API_KEY = 'WEATHER_API_KEY'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 
 const Weather: React.FC = () => {
     const [city, setSelectedCity] = useState<ICity | null>(null)
