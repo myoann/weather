@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
@@ -7,6 +7,8 @@ import SearchForm from '../SearchForm'
 import WeatherResult from '../WeatherResult'
 
 import './index.css'
+
+const OPEN_WEATHER_MAP_API_KEY = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY
 
 interface ICity {
     latitude: number
@@ -42,13 +44,10 @@ interface IWeatherData {
     daily: ICurrentWeather[]
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
-
 const Weather: React.FC = () => {
     const [city, setSelectedCity] = useState<ICity | null>(null)
     const [weather, setWeather] = useState<IWeatherData | null>(null)
+    const [isGoogleMapsLoaded, setIsGoogleMapsLoaded] = useState(false)
 
     const handleSelect = async (address: string): Promise<void> => {
         const geocode = await geocodeByAddress(address)
@@ -90,9 +89,9 @@ const Weather: React.FC = () => {
 
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
-            if (city != null && API_KEY != null) {
+            if (city != null && OPEN_WEATHER_MAP_API_KEY != null) {
                 const { data } = await axios.get(
-                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric`
                 )
 
                 setWeather(data)
@@ -102,19 +101,37 @@ const Weather: React.FC = () => {
         void fetchWeather()
     }, [city])
 
+    useEffect(() => {
+        const checkGoogleMapsLoaded = () => {
+            if (window.google && window.google.maps) {
+                setIsGoogleMapsLoaded(true)
+            } else {
+                setTimeout(checkGoogleMapsLoaded, 100)
+            }
+        }
+
+        checkGoogleMapsLoaded()
+    }, [])
+
     return (
         <div className="weather">
-            <SearchForm
-                onSelect={handleSelect}
-                selectedCity={city?.name ?? null}
-            />
+            {!isGoogleMapsLoaded ? (
+                <div className="loader" />
+            ) : (
+                <Fragment>
+                    <SearchForm
+                        onSelect={handleSelect}
+                        selectedCity={city?.name ?? null}
+                    />
 
-            {city != null && weather != null && (
-                <WeatherResult
-                    selectedCity={city.name}
-                    currentWeather={weather.current}
-                    followingDaysWeather={weather.daily}
-                />
+                    {city != null && weather != null && (
+                        <WeatherResult
+                            selectedCity={city.name}
+                            currentWeather={weather.current}
+                            followingDaysWeather={weather.daily}
+                        />
+                    )}
+                </Fragment>
             )}
         </div>
     )

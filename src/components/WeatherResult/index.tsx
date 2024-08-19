@@ -38,7 +38,7 @@ const WeatherResult = ({
     const weatherCondition = weatherConditionCodes.find(
         (item) => item.id === currentWeather.weather[0].id
     )
-    const secondImage: string = weatherCondition?.image
+    const secondImage = weatherCondition?.image
 
     const sunrise = new Date(currentWeather.sunrise * 1000).toLocaleTimeString()
     const sunriseWithoutSeconds = sunrise.slice(0, sunrise.length - 6)
