@@ -45,7 +45,7 @@ interface IWeatherData {
 }
 
 const Weather: React.FC = () => {
-    const [city, setSelectedCity] = useState<ICity | null>(null)
+    const [selectedCity, setSelectedCity] = useState<ICity | null>(null)
     const [weather, setWeather] = useState<IWeatherData | null>(null)
     const [isGoogleMapsLoaded, setIsGoogleMapsLoaded] = useState(false)
 
@@ -89,9 +89,9 @@ const Weather: React.FC = () => {
 
     useEffect(() => {
         const fetchWeather = async (): Promise<void> => {
-            if (city != null && OPEN_WEATHER_MAP_API_KEY != null) {
+            if (selectedCity != null && OPEN_WEATHER_MAP_API_KEY != null) {
                 const { data } = await axios.get(
-                    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/3.0/onecall?lat=${selectedCity.latitude}&lon=${selectedCity.longitude}&appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric`
                 )
 
                 setWeather(data)
@@ -99,11 +99,11 @@ const Weather: React.FC = () => {
         }
 
         void fetchWeather()
-    }, [city])
+    }, [selectedCity])
 
     useEffect(() => {
         const checkGoogleMapsLoaded = () => {
-            if (window.google && window.google.maps) {
+            if (window.google?.maps) {
                 setIsGoogleMapsLoaded(true)
             } else {
                 setTimeout(checkGoogleMapsLoaded, 100)
@@ -121,12 +121,12 @@ const Weather: React.FC = () => {
                 <Fragment>
                     <SearchForm
                         onSelect={handleSelect}
-                        selectedCity={city?.name ?? null}
+                        selectedCity={selectedCity?.name ?? null}
                     />
 
-                    {city != null && weather != null && (
+                    {selectedCity != null && weather != null && (
                         <WeatherResult
-                            selectedCity={city.name}
+                            selectedCity={selectedCity.name}
                             currentWeather={weather.current}
                             followingDaysWeather={weather.daily}
                         />

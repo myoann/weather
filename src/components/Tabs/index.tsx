@@ -12,7 +12,7 @@ const Tab = ({ children }: ITabProps): JSX.Element => {
 }
 
 interface ITabsProps {
-    children: Array<React.ReactElement<ITabProps>>
+    children: React.ReactElement<ITabProps>[]
     title: string
 }
 

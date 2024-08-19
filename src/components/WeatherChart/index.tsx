@@ -11,12 +11,9 @@ interface IWeatherChart {
 interface ICustomTooltip {
     dataKey: string
     active?: boolean
-    label?: string
-    payload?:
-        | Array<{
-              value: string
-          }>
-        | undefined
+    payload?: Array<{
+        value: string
+    }>
 }
 
 const formatDisplayedValue = (dataKey: string, value: string): string => {

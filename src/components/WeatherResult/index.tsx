@@ -143,11 +143,9 @@ const WeatherResult = ({
                     </WeatherGridElement>
 
                     <WeatherGridElement title="HUMIDITY">
-                        <Fragment>
-                            <div className="humidity">
-                                {currentWeather.humidity}%
-                            </div>
-                        </Fragment>
+                        <div className="humidity">
+                            {currentWeather.humidity}%
+                        </div>
                     </WeatherGridElement>
                 </div>
             </div>
