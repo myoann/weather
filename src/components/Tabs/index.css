@@ -19,14 +19,14 @@
     border-radius: 20px;
     border: 0;
     background: transparent;
-    color: white;
+    color: #fff;
     cursor: pointer;
 }
 
 .tab-button-active {
     font-weight: bold;
-    background: white;
-    color: black;
+    background: #fff;
+    color: #000;
 }
 
 @media (orientation: portrait) {
